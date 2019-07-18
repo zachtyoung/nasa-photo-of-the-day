@@ -8,11 +8,11 @@ let nasaAPI = 'https://api.nasa.gov/planetary/apod?api_key=r2F92MiuirP5Fveu0JZ8u
 
 function App() {
   let [API, setAPI] = useState(nasaAPI);
-  let [content, setContent] = useState('');
+  let [content, setContent] = useState({});
   useEffect(() => {
     axios.get(API)
     .then(res => {
-      setContent(res);
+      setContent(res.data);
     })
     .catch(e => {
       console.log(e)
@@ -20,7 +20,7 @@ function App() {
   }, [API]);
   return (
     <div className="App">
-      {content !== ''? <Image imgUrl={content.data.url} title={content.data.title} date={content.data.date} content={content.data.explanation}/>: console.log("Loading...") }
+      <Image imgUrl={content.url} title={content.title} date={content.date} explanation={content.explanation}/>
     </div>
   );
 }
